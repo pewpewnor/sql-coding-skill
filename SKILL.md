@@ -1,6 +1,6 @@
 ---
 name: sql-coding
-description: Write, review, and refactor SQL queries and statements, including standalone SQL and SQL embedded in Zig strings. Use only when the task deals with SQL itself, not for database-related host code without SQL changes or review.
+description: Write, review, and refactor SQL queries and statements, including standalone SQL and SQL embedded in Zig, TypeScript, Python, Go, and Rust strings. Use only when the task deals with SQL itself, not for database-related host code without SQL changes or review.
 ---
 
 # SQL coding
@@ -8,9 +8,9 @@ description: Write, review, and refactor SQL queries and statements, including s
 ## Scope
 
 Apply this skill only when writing, revising, inspecting, or reviewing SQL queries
-or statements, including DDL, migrations, and SQL embedded in Zig or other
-programming-language strings. Database-related Zig code alone does not trigger
-this skill when no SQL statement is being worked on.
+or statements, including DDL, migrations, and SQL embedded in Zig, TypeScript,
+Python, Go, Rust, or other programming-language strings. Database host code alone
+does not trigger this skill when no SQL statement is being worked on.
 
 This skill covers **SQL code only**: formatting, naming, readability, correctness, and safety. Do not prescribe project structure, file organization, application architecture, or formatting for non-SQL code.
 
@@ -159,6 +159,15 @@ Bind the value through the driver's parameter API. Do not use `std.fmt` or conca
 - Never interpolate untrusted values directly into SQL text.
 - When identifiers must be dynamic, validate against an allowlist; parameter placeholders are for values, not SQL identifiers.
 - If a query is composed from SQL fragments, ensure the assembled SQL still follows these layout rules.
+
+### TypeScript, Python, Go, and Rust
+
+- **TypeScript:** Use multiline template literals. Bind values through the driver; use `${...}` only when a SQL tag explicitly turns substitutions into bound parameters.
+- **Python:** Use triple-quoted strings for multiline SQL. Pass values separately to the driver; avoid f-strings and string formatting for SQL values.
+- **Go:** Use backtick raw strings for multiline SQL. Pass values as query arguments; avoid `fmt.Sprintf` for SQL values.
+- **Rust:** Use multiline strings or raw strings (`r#"..."#`). Bind values through the driver; avoid `format!` for SQL values.
+
+Keep the SQL layout consistent across these languages and use the chosen driver's placeholder syntax.
 
 ## Correctness and safety checks
 
